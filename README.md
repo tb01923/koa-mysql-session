@@ -7,10 +7,9 @@ Usage
 =================
 ```js
 const koa = require('koa')
-        , session = require('koa-generic-session')
-        , MysqlStore = require('koa-mysql-session')
-
-        , app = koa() ;
+    , session = require('koa-generic-session')
+    , MysqlStore = require('koa-mysql-session')
+    , app = koa() ;
 
 const THIRTY_MINTUES = 30 * 60 * 1000;
 
