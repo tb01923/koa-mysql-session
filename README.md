@@ -5,7 +5,7 @@ this is an adpatation of the logic from the connect mysql-session-store (https:/
 
 Usage
 =================
-```node
+```js
 const koa = require('koa')
         , session = require('koa-generic-session')
         , MysqlStore = require('koa-mysql-session')
