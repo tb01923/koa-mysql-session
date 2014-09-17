@@ -1,11 +1,11 @@
 'use strict' ;
-const co = require('co'),
-    mysql = require('co-mysql');
+const co = require('co')
+    , mysql = require('co-mysql');
 
-const CREATE_STATEMENT = 'CREATE  TABLE IF NOT EXISTS `_mysql_session_store` (`id` VARCHAR(255) NOT NULL, `expires` BIGINT NULL, `data` TEXT NULL, PRIMARY KEY (`id`));',
-    GET_STATEMENT = 'SELECT * FROM `_mysql_session_store` WHERE id  = ?' ,
-    SET_STATEMENT ='INSERT INTO _mysql_session_store(id, expires, data) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE expires=?, data =?',
-    DELETE_STATEMENT = 'DELETE FROM `_mysql_session_store` WHERE id  = ?';
+const CREATE_STATEMENT = 'CREATE  TABLE IF NOT EXISTS `_mysql_session_store` (`id` VARCHAR(255) NOT NULL, `expires` BIGINT NULL, `data` TEXT NULL, PRIMARY KEY (`id`));'
+    , GET_STATEMENT = 'SELECT * FROM `_mysql_session_store` WHERE id  = ?'
+    , SET_STATEMENT ='INSERT INTO _mysql_session_store(id, expires, data) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE expires=?, data =?'
+    , DELETE_STATEMENT = 'DELETE FROM `_mysql_session_store` WHERE id  = ?' ;
 
 const FORTY_FIVE_MINUTES = 45 * 60 * 1000 ;
 
