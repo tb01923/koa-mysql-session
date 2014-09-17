@@ -13,9 +13,16 @@ const koa = require('koa')
 
 const THIRTY_MINTUES = 30 * 60 * 1000;
 
+const config= {
+        user: "someUser",
+        password: "somePwd",
+        database: "someDatabase",
+        host: "someHOst"
+}
+
 app.keys = ['your-session-secret']
 app.use(session({
-        store: new MysqlStore(config.db),
+        store: new MysqlStore(config),
         rolling: true,
         cookie: {
             maxage:THIRTY_MINTUES
