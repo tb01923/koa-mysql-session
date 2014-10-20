@@ -1,6 +1,6 @@
 {
   "name": "koa-mysql-session",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "a session store compatible with koa-generic-session based off of the SQL logic in the connect mysql-session-store project",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "keywords": [
     "koa",
     "session",
+    "mysql",
     "nodejs"
   ],
   "author": "todd brown",

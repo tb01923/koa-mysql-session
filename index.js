@@ -37,6 +37,7 @@ var MysqlStore = function (options) {
         let now = (new Date()).valueOf ;
         let connection = this.getConnection() ;
         let results = connection.query(CLEANUP_STATEMENT, [now]) ;
+        connection.release()
     };
 
 
@@ -44,6 +45,7 @@ var MysqlStore = function (options) {
         let connection = this.getConnection()
         let result = yield connection.query(CREATE_STATEMENT)
         this.cleanup()
+        connection.release()
     }).call(this)
 
     setInterval( this.cleanup.bind(this), 15 * 60 * 1000 );
@@ -52,6 +54,7 @@ var MysqlStore = function (options) {
 MysqlStore.prototype.get = function *(sid) {
     let connection = this.getConnection()
     let results = yield connection.query(GET_STATEMENT, [sid])
+    connection.release()
     let session = null ;
     if(results && results[0] && results[0][0] && results[0][0].data){
         session = JSON.parse(results[0][0].data);
@@ -64,12 +67,14 @@ MysqlStore.prototype.set = function *(sid, session, ttl) {
     let data = JSON.stringify(session);
     let connection = this.getConnection()
     let results = yield connection.query(SET_STATEMENT, [sid, expires, data, expires, data])
+    connection.release()
     return results
 };
 
 MysqlStore.prototype.destroy = function *(sid) {
     let connection = this.getConnection()
     let results = yield connection.query(DELETE_STATEMENT, [sid])
+    connection.release()
 };
 
 module.exports = MysqlStore;
