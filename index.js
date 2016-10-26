@@ -37,9 +37,9 @@ var MysqlStore = function (options) {
     }
 
     this.cleanup = function() {
-        let now = (new Date()).valueOf() ;
-        let connection = this.getConnection() ;
-        let results = connection.query(CLEANUP_STATEMENT, [now])() ;
+        let now = new Date().getTime();
+        let connection = this.getConnection();
+        let results = connection.query(CLEANUP_STATEMENT, [now])();
     };
 
 
