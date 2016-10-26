@@ -9,6 +9,7 @@ const CREATE_STATEMENT = 'CREATE  TABLE IF NOT EXISTS `_mysql_session_store` (`i
     , CLEANUP_STATEMENT = 'DELETE FROM `_mysql_session_store` WHERE expires  < ?' ;
 
 const FORTY_FIVE_MINUTES = 45 * 60 * 1000 ;
+const FIFTEEN_MINUTES = 15 * 60 * 1000;
 
 let getExpiresOn = function(session, ttl){
     let expiresOn = null ;
@@ -29,6 +30,7 @@ let getExpiresOn = function(session, ttl){
 
 var MysqlStore = function (options) {
     let pool = null
+    let cleanInterval = (!options.clean) ? FIFTEEN_MINUTES : options.clean;
     this.getConnection = function(){
         if(!pool) {
             pool = mysql.createPool(options) ;
@@ -49,7 +51,7 @@ var MysqlStore = function (options) {
         this.cleanup()
     }).call(this)
 
-    setInterval( this.cleanup.bind(this), 15 * 60 * 1000 );
+    setInterval( this.cleanup.bind(this), cleanInterval);
 };
 
 MysqlStore.prototype.get = function *(sid) {
