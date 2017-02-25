@@ -2,8 +2,8 @@
 const co = require('co')
     , mysql = require('co-mysql');
 
-const CREATE_STATEMENT = 'CREATE  TABLE IF NOT EXISTS `_mysql_session_store` (`id` VARCHAR(255) NOT NULL, `expires` BIGINT NULL, `data` TEXT NULL, PRIMARY KEY (`id`));'
-    , GET_STATEMENT = 'SELECT * FROM `_mysql_session_store` WHERE id  = ?'
+const CREATE_STATEMENT = 'CREATE  TABLE IF NOT EXISTS `_mysql_session_store` (`id` VARCHAR(255) NOT NULL, `expires` BIGINT NULL, `data` TEXT NULL, PRIMARY KEY (`id`), KEY `_mysql_session_store__expires` (`expires`));'
+    , GET_STATEMENT = 'SELECT * FROM `_mysql_session_store` WHERE id  = ? AND expires > ?'
     , SET_STATEMENT ='INSERT INTO _mysql_session_store(id, expires, data) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE expires=?, data =?'
     , DELETE_STATEMENT = 'DELETE FROM `_mysql_session_store` WHERE id  = ?'
     , CLEANUP_STATEMENT = 'DELETE FROM `_mysql_session_store` WHERE expires  < ?' ;
@@ -54,7 +54,7 @@ var MysqlStore = function (options) {
 
 MysqlStore.prototype.get = function *(sid) {
     let connection = this.getConnection()
-    let results = yield connection.query(GET_STATEMENT, [sid])
+    let results = yield connection.query(GET_STATEMENT, [sid, Date.now()])
     let session = null ;
     if(results && results[0] && results[0][0] && results[0][0].data){
         session = JSON.parse(results[0][0].data);
