@@ -1,6 +1,6 @@
 {
   "name": "koa-mysql-session",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "a session store compatible with koa-generic-session based off of the SQL logic in the connect mysql-session-store project",
   "main": "index.js",
   "scripts": {
