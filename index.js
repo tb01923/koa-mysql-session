@@ -42,6 +42,8 @@ var MysqlStore = function (options) {
         let results = await this.queryPromise(CLEANUP_STATEMENT, [now])();
     };
 
+    this.queryPromise(CREATE_STATEMENT);
+
     setInterval(this.cleanup.bind(this), cleanInterval);
 };
 
