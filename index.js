@@ -39,7 +39,7 @@ var MysqlStore = function (options) {
 
     this.cleanup = async function () {
         let now = new Date().getTime();
-        let results = await this.queryPromise(CLEANUP_STATEMENT, [now])();
+        let results = this.queryPromise(CLEANUP_STATEMENT, [now]);
     };
 
     this.queryPromise(CREATE_STATEMENT);
@@ -61,10 +61,9 @@ MysqlStore.prototype.set = async function (sid, session, ttl) {
     let data = JSON.stringify(session);
     let results = this.queryPromise(SET_STATEMENT, [sid, expires, data, expires, data]);
     await results.then(res => {
-        this.logger(res);
     })
         .catch(err => {
-            console.info(err);
+            this.logger(err);
         })
     return results
 };
